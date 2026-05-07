@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../context/Context.jsx";
 import API from "../axios";
 import CheckoutPopup from "./CheckoutPopup";
+import {Link} from "react-router-dom";
 
 const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
     const [imageUrl, setImageUrl] = useState(null);
@@ -143,7 +144,7 @@ const Cart = () => {
                     })
                 );
 
-                await API.put(`/product/${item.id}`, formData); // ✅ using id
+                await API.put(`/product/${item.id}`, formData);
             }
 
             clearCart();
@@ -160,6 +161,13 @@ const Cart = () => {
             <div className="flex flex-col items-center justify-center min-h-[60vh]">
                 <p className="text-2xl mb-2">🛒</p>
                 <p className="text-slate-500 text-sm">Your cart is empty</p>
+                <Link
+                    to="/"
+                    className="relative flex items-center gap-1.5 px-3 h-10 px-20 py-5 mt-5 rounded-lg bg-[#161b27] border border-[#1e2a3a] text-slate-300 hover:text-white hover:border-blue-500 text-sm font-medium transition-colors"
+                >
+                    Shop Now
+                </Link>
+
             </div>
         );
     }

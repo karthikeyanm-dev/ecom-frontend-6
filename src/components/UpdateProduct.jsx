@@ -26,7 +26,7 @@ const UpdateProduct = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await API.get(`/product/${id}`);
+                const res = await API.get(`/products/${id}`);
                 const data = res.data;
                 const p = data["product"] || data;
                 setProduct(p);

@@ -1,15 +1,24 @@
 @import "tailwindcss";
 
-/* Force Tailwind-like dark mode manually */
-.dark body {
-    background-color: #303238; /* gray-900 */
+/* Dark mode strategy for v4 */
+@variant dark (&:where(.dark, .dark *));
+
+/* Global base */
+html, body {
+    background-color: #020617;
     color: white;
+    margin: 0;
 }
 
-.label {
-    @apply block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300;
-}
+@layer components {
+    .form-label {
+        @apply block mb-1.5 text-xs font-semibold tracking-widest uppercase text-slate-400;
+    }
 
-.input {
-    @apply w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white;
+    .form-input {
+        @apply w-full px-4 py-2.5 text-sm rounded-xl border
+        bg-slate-800/60 border-slate-700 text-slate-100 placeholder-slate-500
+        focus:outline-none focus:ring-2 focus:ring-blue-500/60 focus:border-blue-500
+        hover:border-slate-600 transition-all duration-200;
+    }
 }

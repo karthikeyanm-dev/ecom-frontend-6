@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../axios";
+import {toast} from "react-toastify/unstyled";
 
 const UpdateProduct = () => {
     const { id } = useParams();
@@ -71,11 +72,35 @@ const UpdateProduct = () => {
             if (image) data.append("image", image);
             data.append("product", new Blob([JSON.stringify(formData)], { type: "application/json" }));
             await API.put(`/product/${id}`, data);
-            alert("✅ Product updated successfully");
+            toast("Product updated successfully");
+            toast(
+                <div className="flex items-center gap-3">
+                    {/* Image */}
+                    <img
+                        src={preview || image}
+                        alt={product.name}
+                        className="w-10 h-10 rounded object-cover"
+                    />
+
+                    {/* Text */}
+                    <div className="flex flex-col">
+                    <span className="text-sm font-semibold">
+                      {product.name}
+                    </span>
+                    <span className="text-xs text-green-300">
+                      Updated
+                    </span>
+                    </div>
+                </div>,
+                {
+                    className:
+                        "bg-[#161b27] text-white border border-[#1e2a3a] rounded-xl shadow-lg",
+                }
+            );
             navigate(`/product/${id}`);
         } catch (err) {
             console.error(err);
-            alert("❌ Failed to update product");
+            toast("Failed to update product");
         } finally {
             setSubmitting(false);
         }

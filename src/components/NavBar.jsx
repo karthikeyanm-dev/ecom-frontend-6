@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../axios";
 import AppContext from "../context/Context.jsx";
+import {toast} from "react-toastify/unstyled";
 
 const Navbar = ({ onSelectCategory }) => {
 
@@ -18,8 +19,8 @@ const Navbar = ({ onSelectCategory }) => {
     const dropdownRef = useRef(null);
     const searchRef = useRef(null);
     const navigate = useNavigate();
+    const[categories, setCategory] = useState(["Laptop", "Mobile", "Headphone", "Electronics", "Toys", "Fashion"]);
 
-    const categories = ["Laptop", "Mobile", "Headphone", "Electronics", "Toys", "Fashion"];
 
     // ── Theme ──────────────────────────────────────────────
     const toggleTheme = () => {
@@ -27,6 +28,21 @@ const Navbar = ({ onSelectCategory }) => {
         setTheme(next);
         localStorage.setItem("theme", next);
     };
+
+    useEffect(()=>{
+        const fetchCategories = async () => {
+            try{
+                const res = await API.get(`/products/all-categories`);
+                const productCategories = res.data;
+                console.log(productCategories);
+                setCategory(productCategories);
+            }catch(err){
+                console.log(err);
+                toast(err)
+            }
+        }
+        fetchCategories();
+    },[location.pathname]);
 
     useEffect(() => {
         document.documentElement.classList.toggle("dark", theme === "dark");
@@ -109,11 +125,11 @@ const Navbar = ({ onSelectCategory }) => {
                                 <div className="absolute top-8 left-0 w-44 bg-[#161b27] border border-[#1e2a3a] rounded-lg shadow-xl overflow-hidden">
                                     {categories.map((cat) => (
                                         <button
-                                            key={cat}
-                                            onClick={() => { onSelectCategory(cat); setDropdownOpen(false); }}
+                                            key={cat.categoryId}
+                                            onClick={() => { onSelectCategory(cat.categories); setDropdownOpen(false); }}
                                             className="w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:bg-[#1e2a3a] hover:text-white transition-colors"
                                         >
-                                            {cat}
+                                            {cat.categories}
                                         </button>
                                     ))}
                                 </div>

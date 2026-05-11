@@ -20,7 +20,7 @@ export const AppProvider = ({ children }) => {
     const addToCart = (product) => {
         console.log(product,"From Context");
         const existingProductIndex = cart.findIndex(
-            (item) => item.id === product.id  // ✅ use id
+            (item) => item.id === product.id  // use id
         );
         if (existingProductIndex !== -1) {
             const updatedCart = cart.map((item, index) =>
@@ -38,7 +38,7 @@ export const AppProvider = ({ children }) => {
     };
 
     const removeFromCart = (id) => {
-        const updatedCart = cart.filter((item) => item.id !== id);  // ✅ use id
+        const updatedCart = cart.filter((item) => item.id !== id);  // use id
         setCart(updatedCart);
         localStorage.setItem('cart', JSON.stringify(updatedCart));
     };

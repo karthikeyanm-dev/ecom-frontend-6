@@ -29,39 +29,31 @@ function App() {
     return (
         <AppProvider>
             <BrowserRouter>
-                <ToastContainer autoClose={2000}
-                                hideProgressBar={false}
-                                theme={"dark"}
-                                pauseOnHover
-                                transition={Slide}
+                <div className="bg-slate-950 min-h-screen flex flex-col">  {/* 👈 */}
+                    <ToastContainer
+                        autoClose={2000}
+                        hideProgressBar={false}
+                        theme={"dark"}
+                        pauseOnHover
+                        transition={Slide}
+                    />
 
-                />
-                {/* Navbar */}
-                <Navbar onSelectCategory={handleCategorySelect} />
+                    <Navbar onSelectCategory={handleCategorySelect} />
 
-                {/* Main Content */}
-                <main className="pt-30 min-h-screen">
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                <Home
-                                    selectedCategory={selectedCategory}
-                                />
-                            }
-                        />
+                    <main className="pt-16 min-h-screen flex-1">
+                        <Routes>
+                            <Route path="/" element={<Home selectedCategory={selectedCategory} />} />
+                            <Route path="/add-product" element={<AddProduct />} />
+                            <Route path="/product/:id" element={<Product />} />
+                            <Route path="/cart" element={<Cart />} />
+                            <Route path="/product/update/:id" element={<UpdateProduct />} />
+                            <Route path="/orders" element={<Order />} />
+                            <Route path="/search-results" element={<SearchResults />} />
+                        </Routes>
+                    </main>
 
-                        <Route path="/add-product" element={<AddProduct />} />
-
-                        <Route path="/product/:id" element={<Product />} />
-                        <Route path="/cart" element={<Cart  />} />
-                        <Route path="/product/update/:id" element={<UpdateProduct />} />
-                        <Route path="/orders" element={<Order />} />
-                        <Route path="/search-results" element={<SearchResults />} />
-                    </Routes>
-                </main>
-                {/* Footer */}
-                <Footer />
+                    <Footer />
+                </div>
             </BrowserRouter>
         </AppProvider>
     );

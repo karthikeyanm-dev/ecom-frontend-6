@@ -7,12 +7,15 @@ const CheckoutPopup = ({
                            cartItems,
                            totalPrice,
                            handleCheckout,
+                           setName,
+                           setEmailId,
+                           name,
+                           emailId,
                        }) => {
     const [imageUrls, setImageUrls] = useState({});
 
     // Customer Details
-    const [name, setName] = useState("");
-    const [emailId, setEmailId] = useState("");
+
 
     const [loading, setLoading] = useState(false);
 

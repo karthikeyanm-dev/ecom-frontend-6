@@ -48,11 +48,12 @@ const Product = () => {
             await axios.delete(`/product/${id}`);
             removeFromCart(id);
             console.log("Product deleted successfully");
-            alert("Product deleted successfully");
+            toast("Product deleted successfully");
             refreshData();
             navigate("/");
         } catch (error) {
             console.error("Error deleting product:", error);
+            toast("Failed to delete product clear any pending orders to delete this product" + error);
         }
     };
 

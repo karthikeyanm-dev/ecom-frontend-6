@@ -3,6 +3,7 @@ import AppContext from "../context/Context.jsx";
 import API from "../axios";
 import CheckoutPopup from "./CheckoutPopup";
 import {Link} from "react-router-dom";
+import {toast} from "react-toastify/unstyled";
 
 const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
     const [imageUrl, setImageUrl] = useState(null);
@@ -79,6 +80,8 @@ const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [showModal, setShowModal] = useState(false);
+    const [name, setName] = useState("");
+    const [emailId, setEmailId] = useState("");
 
     useEffect(() => {
         setCartItems(cart.length ? cart : []);
@@ -125,31 +128,29 @@ const Cart = () => {
 
     const handleCheckout = async () => {
         try {
-            for (const item of cartItems) {
 
-                const updatedStock = item.stockQuantity - item.quantity;
+            const orderRequest = {
+                customerName: name,
+                email: emailId,
+                items: cartItems.map((item) => ({
+                    productId: item.id,
+                    quantity: item.quantity,
+                })),
+            };
 
-                const updated = {
-                    ...item,
-                    stockQuantity: updatedStock,
-                    available: updatedStock > 0,
-                };
+            const response = await API.post(
+                "/orders/place",
+                orderRequest
+            );
 
-                const formData = new FormData();
-
-                formData.append(
-                    "product",
-                    new Blob([JSON.stringify(updated)], {
-                        type: "application/json",
-                    })
-                );
-
-                await API.put(`/product/${item.id}`, formData);
-            }
-
+            console.log("Order placed:", response.data);
+            toast(response.data.message);
             clearCart();
             setCartItems([]);
             setShowModal(false);
+
+            setName("");
+            setEmailId("");
 
         } catch (err) {
             console.error("Checkout error:", err);
@@ -213,6 +214,11 @@ const Cart = () => {
                 cartItems={cartItems}
                 totalPrice={totalPrice}
                 handleCheckout={handleCheckout}
+                setName={setName}
+                name={name}
+                emaiId={emailId}
+                setEmailId={setEmailId}
+
             />
         </div>
     );

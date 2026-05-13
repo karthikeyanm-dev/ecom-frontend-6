@@ -83,9 +83,9 @@ const SearchResults = () => {
                                     navigate(`/product/${product.productId || product.id}`)
                                 }
                             >
-                                {product.productImage ? (
+                                {product.image ? (
                                     <img
-                                        src={getImage(product.productImage)}
+                                        src={getImage(product.image)}
                                         alt={product.name}
                                         className="w-full h-full object-cover group-hover:scale-105 transition"
                                     />

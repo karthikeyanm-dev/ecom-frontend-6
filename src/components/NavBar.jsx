@@ -34,7 +34,6 @@ const Navbar = ({ onSelectCategory }) => {
             try{
                 const res = await API.get(`/products/all-categories`);
                 const productCategories = res.data;
-                console.log(productCategories);
                 setCategory(productCategories);
             }catch(err){
                 console.log(err);
@@ -125,11 +124,11 @@ const Navbar = ({ onSelectCategory }) => {
                                 <div className="absolute top-8 left-0 w-44 bg-[#161b27] border border-[#1e2a3a] rounded-lg shadow-xl overflow-hidden">
                                     {categories.map((cat) => (
                                         <button
-                                            key={cat.categoryId}
-                                            onClick={() => { onSelectCategory(cat.categories); setDropdownOpen(false); }}
+                                            key={cat.id}
+                                            onClick={() => { onSelectCategory(cat.cat); setDropdownOpen(false); }}
                                             className="w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:bg-[#1e2a3a] hover:text-white transition-colors"
                                         >
-                                            {cat.categories}
+                                            {cat.cat}
                                         </button>
                                     ))}
                                 </div>
@@ -292,11 +291,11 @@ const Navbar = ({ onSelectCategory }) => {
                             <p className="text-xs text-slate-500 px-3 mb-2">Categories</p>
                             {categories.map((cat) => (
                                 <button
-                                    key={cat}
-                                    onClick={() => { onSelectCategory(cat); setMenuOpen(false); }}
+                                    key={cat.id}
+                                    onClick={() => { onSelectCategory(cat.cat); setMenuOpen(false); }}
                                     className="w-full text-left px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-[#161b27] rounded-lg transition-colors"
                                 >
-                                    {cat}
+                                    {cat.cat}
                                 </button>
                             ))}
                         </div>
